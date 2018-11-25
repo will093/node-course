@@ -17,9 +17,7 @@ if (command === 'add') {
 
     if (note) {
         console.log('Note');
-        console.log('--');
-        console.log(`title: ${note.title}`);
-        console.log(`body: ${note.body}`);
+        notes.logNote(note);
     } else {
         console.log('Title already in use');
     }
@@ -28,9 +26,8 @@ if (command === 'add') {
 } else if (command === 'read') {
     const note = notes.getNote(argv.title);
     if (note) {
-        console.log('Note found:');
-        console.log(note.title);
-        console.log(note.body);
+        console.log('Note');
+        notes.logNote(note);
     } else {
         console.log(`Note ${argv.title} note found`);
     }

@@ -46,9 +46,16 @@ const removeNote = (title) => {
     return notesOld.length !== notesNew.length;
 }
 
+const logNote = (note) => {
+    console.log('--');
+    console.log(note.title);
+    console.log(note.body);
+}
+
 module.exports = {
     addNote,
     getAll,
     getNote,
-    removeNote
+    removeNote,
+    logNote
 };
