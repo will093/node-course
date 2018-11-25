@@ -30,7 +30,7 @@ const addNote = (title, body) => {
 }
 
 const getAll = () => {
-
+    return fetchNotes();
 }
 
 const getNote = (title) => {
@@ -51,6 +51,7 @@ const logNote = (note) => {
     console.log(note.title);
     console.log(note.body);
 }
+
 
 module.exports = {
     addNote,
