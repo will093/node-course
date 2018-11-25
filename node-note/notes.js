@@ -34,11 +34,16 @@ const getAll = () => {
 }
 
 const getNote = (title) => {
-    console.log('Getting note', title);
+    const notes = fetchNotes();
+    const note = notes.find(n => n.title === title);
+    return note;
 }   
 
 const removeNote = (title) => {
-    console.log('Removing note', title)
+    const notesOld = fetchNotes();
+    notesNew = notesOld.filter(n => n.title !== title);
+    saveNotes(notesNew);
+    return notesOld.length !== notesNew.length;
 }
 
 module.exports = {
