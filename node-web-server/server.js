@@ -2,7 +2,9 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
-var app = express();
+// Set port from environment if it is defined, in order to work with Heroku.
+const port = process.env.PORT || 3000;
+const app = express();
 
 // Specify that we want to use hbs as the view engine.
 app.set('view engine', 'hbs');
@@ -31,11 +33,6 @@ app.use((req, res, next) => {
 // Middlewware to serve up files from our public folder
 app.use(express.static(`${__dirname}/public`));
 
-res.render('home.hbs', {
-    pageTitle: 'Home page',
-    welcomeMessage: 'Welcome!',
-});
-
 hbs.registerHelper('getCurrentYear', () => {
     return new Date().getFullYear();
 });
@@ -61,4 +58,6 @@ app.get('/bad', (req, res) => {
     res.send({ errorMessage: 'Bad error' });
 });
 
-app.listen(3000);
+app.listen(port, () => {
+    console.log(`Server is now up on port ${port}`);
+});
