@@ -1,8 +1,8 @@
 const express = require('express');
 const hbs = require('hbs');
+const fs = require('fs');
 
 var app = express();
-
 
 // Specify that we want to use hbs as the view engine.
 app.set('view engine', 'hbs');
@@ -10,8 +10,31 @@ app.set('view engine', 'hbs');
 // Specify where our partials live
 hbs.registerPartials(`${__dirname}/views/partials`);
 
-// Specify our public folder
+// Middleware to log requests to the server.
+app.use((req, res, next) => {
+    const now = new Date().toString();
+    const log = `${now}: ${req.method} ${req.url}`;
+    console.log(log);
+    fs.appendFile('server.log', log + '\n', (err) => {
+        if (err) {
+            console.log('Unable to append to server.log');
+        }
+    })
+    next();
+});
+
+// Middleware to serve up maintenance page.
+// app.use((req, res, next) => {
+//     res.render('maintenance.hbs');
+// })
+
+// Middlewware to serve up files from our public folder
 app.use(express.static(`${__dirname}/public`));
+
+res.render('home.hbs', {
+    pageTitle: 'Home page',
+    welcomeMessage: 'Welcome!',
+});
 
 hbs.registerHelper('getCurrentYear', () => {
     return new Date().getFullYear();
